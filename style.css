@@ -65,31 +65,32 @@ body{
   background: transparent;
 }
 
-/* Header block with black outline and subtle white-ish fill */
+/* Header block with black outline and subtle white-ish fill (made larger for emphasis) */
 .video-header{
-  padding:0.9rem 1rem;
+  padding:1.2rem 1.25rem; /* increased padding to make the block larger */
   text-align:center;
   background: var(--card-bg);
   border:2px solid #000; /* black contour as requested */
-  border-radius:10px;
+  border-radius:12px;
   width:calc(100% - 2rem);
-  max-width:980px;
-  margin:1rem auto 0.6rem;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  max-width:1200px; /* allow wider header on large screens */
+  margin:1.2rem auto 0.8rem; /* a touch more top spacing */
+  box-shadow: 0 10px 28px rgba(0,0,0,0.10);
   z-index:10;
 }
 .video-header h1{
-  font-size:clamp(1rem, 2.2vw, 1.6rem);
-  line-height:1.05;
-  letter-spacing:0.2px;
+  font-size:clamp(1.2rem, 3.2vw, 2rem); /* larger, responsive headline */
+  line-height:1.02;
+  letter-spacing:0.3px;
   color:var(--primary-dark);
   font-weight:700;
+  margin-bottom:0.15rem;
 }
 .video-header p{
-  margin-top:0.35rem;
+  margin-top:0.25rem;
   color:var(--muted);
-  font-weight:500;
-  font-size:0.95rem;
+  font-weight:600;
+  font-size:1.05rem; /* slightly bigger subtitle for balance */
 }
 
 /* Video container takes remaining viewport height */
