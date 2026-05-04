@@ -1,47 +1,163 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vidéo Bac Pro CIEL - Lycée Château Blanc</title>
+:root{
+  --primary-dark: #2b2b2b;
+  --card-bg: rgba(255,255,255,0.95);
+  --accent: #5f999b;
+  --muted: rgba(43,43,43,0.6);
+  --radius: 14px;
+  --gap: 1.25rem;
+}
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+/* Reset */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  height:100%;
+  /* Ensure the full viewport uses the requested background gradient */
+  background: linear-gradient(180deg, #fde6a0 0%, #ffffff 100%);
+  color: var(--primary-dark);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  font-family: 'Poppins', sans-serif;
+}
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <button class="back-button" aria-label="Retour à l'accueil" onclick="location.href='https://umi4555.github.io/accueil/'">
-    ← Accueil
-  </button>
+/* Page */
+body{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0; /* remove outer page padding so video can fill */
+}
 
-  <main class="video-wrapper" role="main">
-    <header class="video-header" aria-hidden="false">
-      <h1>Bac Pro CIEL</h1>
-      <p>Découvrez notre formation professionnelle à travers cette vidéo</p>
-    </header>
+/* Back button */
+.back-button{
+  position:fixed;
+  top: calc(1rem + 2mm);
+  left:1rem;
+  background:var(--accent);
+  color:#fff;
+  border:0;
+  padding:0.6rem 1rem;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:600;
+  box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  transition:transform .18s ease, box-shadow .18s ease;
+  min-height:44px;
+  min-width:44px;
+  z-index:40;
+}
+.back-button:focus{
+  outline:3px solid rgba(95,153,155,0.25);
+  outline-offset:3px;
+}
+.back-button:hover{ transform:translateY(-2px) }
 
-    <section class="video-container">
-      <div class="videos-grid single">
-        <div class="video-item large">
-          <video controls preload="metadata" poster="poster.png" aria-label="Vidéo de présentation Bac Pro CIEL">
-            <source src="screenrecording-01-31-2025-22-23-25-1-copie_8YKEBkOm.mp4" type="video/mp4" />
-            Votre navigateur ne supporte pas la lecture vidéo.
-          </video>
-        </div>
-      </div>
-    </section>
-  </main>
+/* Main wrapper fills viewport so video can be maximized */
+.video-wrapper{
+  width:100%;
+  height:100vh;
+  max-width:100%;
+  display:flex;
+  flex-direction:column;
+  border-radius:0; /* use full-bleed feel */
+  overflow:hidden;
+  box-shadow:none;
+  border:0;
+  background: transparent;
+}
 
-  <!-- Small script to ensure focus management for accessibility -->
-  <script>
-    // Move focus to main content for keyboard users
-    document.addEventListener('DOMContentLoaded', () => {
-      const main = document.querySelector('.video-wrapper');
-      if (main) main.setAttribute('tabindex', '-1');
-      main && main.focus();
-    });
-  </script>
-</body>
-</html>
+/* Header block with black outline and subtle white-ish fill */
+.video-header{
+  padding:0.9rem 1rem;
+  text-align:center;
+  background: var(--card-bg);
+  border:2px solid #000; /* black contour as requested */
+  border-radius:10px;
+  width:calc(100% - 2rem);
+  max-width:980px;
+  margin:1rem auto 0.6rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  z-index:10;
+}
+.video-header h1{
+  font-size:clamp(1rem, 2.2vw, 1.6rem);
+  line-height:1.05;
+  letter-spacing:0.2px;
+  color:var(--primary-dark);
+  font-weight:700;
+}
+.video-header p{
+  margin-top:0.35rem;
+  color:var(--muted);
+  font-weight:500;
+  font-size:0.95rem;
+}
+
+/* Video container takes remaining viewport height */
+.video-container{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:transparent;
+  padding:0;
+}
+
+/* Single big video but slightly constrained so it's not edge-to-edge */
+.videos-grid{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+}
+.videos-grid.single { padding:0; }
+.video-item{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0.6rem; /* small breathing room on very small screens */
+  max-width:none;
+}
+
+/* Slightly smaller/max-constrained video for a framed look */
+.video-item.large video{
+  width:94%;
+  height:94%;
+  max-width:1200px;
+  max-height:86vh;
+  display:block;
+  border-radius:10px;
+  background:#000;
+  object-fit:cover; /* maintain immersive fill when possible */
+  box-shadow:0 14px 40px rgba(0,0,0,0.22);
+  border:0;
+  transition:transform .18s ease;
+}
+.video-item.large video:focus,
+.video-item.large video:hover{
+  transform:translateY(-4px);
+}
+
+/* On small viewports keep video fully visible but still large */
+@media (max-width:900px){
+  .video-header h1{ font-size:1.1rem }
+  .video-header p{ font-size:0.85rem }
+  .video-item{ padding:0.4rem }
+  .video-item.large video{
+    object-fit:contain;
+    width:calc(100% - 16px);
+    height:calc(100vh - 120px);
+    max-height:calc(100vh - 120px);
+  } /* ensure no cropping if needed */
+}
+
+/* Extra small screens */
+@media (max-width:480px){
+  .back-button{ top: calc(0.6rem + 1mm); left:0.6rem; padding:0.5rem .8rem }
+  .video-header{ padding:0.7rem; margin-top:0.6rem }
+  .video-header h1{ font-size:1rem }
+  .video-header p{ font-size:0.8rem }
+}
